@@ -77,7 +77,8 @@ def parse_commandline_arguments():
 
     # Define script command line arguments
     parser = argparse.ArgumentParser(description='Run object detection inference on input image.')
-    parser.add_argument('-i', '--input_video',  type=str, default='v4l2src device=/dev/video1 ! video/x-raw, width=640, height=480, format=(string)YUY2,framerate=30/1 ! videoconvert ! video/x-raw,width=640,height=480,format=BGR ! appsink',
+    parser.add_argument('-i', '--input_video',  type=str, default='v4l2src device=/dev/video1 ! video/x-raw, width=640, height=360, format=(string)YUY2,framerate=30/1 ! videoconvert ! video/x-raw,width=640,height=360,format=BGR ! appsink',
+    #parser.add_argument('-i', '--input_video',  type=str, default='nvarguscamerasrc ! video/x-raw(memory:NVMM), width=(int)640, height=(int)360, format=(string)NV12, framerate=(fraction)60/1 ! nvvidconv flip-method=0 ! video/x-raw, width=(int)640, height=(int)360, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink',
     #parser.add_argument('-i', '--input_video',  type=str, default='challenge.mp4',
         help='an image file to run inference on')
     parser.add_argument('-p', '--precision', type=int, choices=[32, 16], default=32,
