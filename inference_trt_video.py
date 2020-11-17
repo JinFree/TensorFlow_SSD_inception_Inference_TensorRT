@@ -77,9 +77,9 @@ def parse_commandline_arguments():
 
     # Define script command line arguments
     parser = argparse.ArgumentParser(description='Run object detection inference on input image.')
-    parser.add_argument('-i', '--input_video',  type=str, default='v4l2src device=/dev/video1 ! video/x-raw, width=640, height=360, format=(string)YUY2,framerate=30/1 ! videoconvert ! video/x-raw,width=640,height=360,format=BGR ! appsink',
+    #parser.add_argument('-i', '--input_video',  type=str, default='v4l2src device=/dev/video1 ! video/x-raw, width=640, height=360, format=(string)YUY2,framerate=30/1 ! videoconvert ! video/x-raw,width=640,height=360,format=BGR ! appsink',
     #parser.add_argument('-i', '--input_video',  type=str, default='nvarguscamerasrc ! video/x-raw(memory:NVMM), width=(int)640, height=(int)360, format=(string)NV12, framerate=(fraction)60/1 ! nvvidconv flip-method=0 ! video/x-raw, width=(int)640, height=(int)360, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink',
-    #parser.add_argument('-i', '--input_video',  type=str, default='challenge.mp4',
+    parser.add_argument('-i', '--input_video',  type=str, default='challenge.mp4',
         help='an image file to run inference on')
     parser.add_argument('-p', '--precision', type=int, choices=[32, 16], default=32,
         help='desired TensorRT float precision to build an engine with')
@@ -89,7 +89,7 @@ def parse_commandline_arguments():
         help='sample workspace directory')
     parser.add_argument("-o", "--output",
         help="path of the output file",
-        default="result.avi")
+        default=None)
 
     # Parse arguments passed
     args = parser.parse_args()
@@ -124,6 +124,7 @@ def Video(savepath = None):
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         out = cv2.VideoWriter(savepath, fourcc, fps, (640, 360), True)
     cv2.namedWindow("Frame", cv2.WINDOW_GUI_EXPANDED)
+    cv2.resizeWindow('Frame', 640,360)
     while cap.isOpened():
         # Capture frame-by-frame
         ret, frame = cap.read()
